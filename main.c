@@ -16,10 +16,10 @@ typedef struct lista{
 }Lista;
 
 //Declara��o de fun��es.
-Lista* inserir_restaurantes(Lista* primeiro);
-void listar_restaurantes(Lista* primeiro);
-Lista* excluir_restaurantes(Lista* primeiro);
-void alterar_restaurantes(Lista* primeiro);
+Lista* inserir_pets(Lista* primeiro);
+void listar_pets(Lista* primeiro);
+Lista* excluir_pets(Lista* primeiro);
+void alterar_pets(Lista* primeiro);
 
 main()
 {
@@ -32,7 +32,7 @@ main()
     {
         //Menu de opcoes 
         printf(" %c----------------------------------------------------------------------------%c\n",201,187);
-        printf(" | ");printf("\t\t\t     CADASTRO DE RESTAURANTES");printf("\t\t\t      |\n");
+        printf(" | ");printf("\t\t\t     CADASTRO DE PETS");printf("\t\t\t      |\n");
         printf(" %c----------------------------------------------------------------------------%c\n",200,188);
         printf("\t       %c----------%c\t\t\t\t       ",201,187);
         printf("\t\t\t               |   MENU   ");printf("|\t\t\t\t      \n");
@@ -65,7 +65,7 @@ main()
                 printf(" %c----------------------------------------------------------------------------%c\n",201,187);
                 printf(" | ");printf("\t\t\t          NOVO CADASTRO     ");printf("\t\t\t      |\n");
                 printf(" %c----------------------------------------------------------------------------%c\n",200,188);
-                primeiro= inserir_restaurantes(primeiro);
+                primeiro= inserir_pets(primeiro);
                 getch();
                 system("cls");
                 break;
@@ -75,9 +75,9 @@ main()
                 //Listando os restaurantes.
                 system ("cls");
                 printf(" %c----------------------------------------------------------------------------%c\n",201,187);
-                printf(" | ");printf("\t\t\t     RESTAURANTES CADASTRADOS");printf("\t\t\t      |\n");
+                printf(" | ");printf("\t\t\t     PETS CADASTRADOS");printf("\t\t\t      |\n");
                 printf(" %c----------------------------------------------------------------------------%c\n",200,188);
-                listar_restaurantes(primeiro);
+                listar_pets(primeiro);
                 getch();
                 system("cls");
                 break;
@@ -89,7 +89,7 @@ main()
                 printf(" %c----------------------------------------------------------------------------%c\n",201,187);
                 printf(" | ");printf("\t\t\t        EXCLUIR CADASTROS");printf("\t\t\t      |\n");
                 printf(" %c----------------------------------------------------------------------------%c\n",200,188);
-                primeiro= excluir_restaurantes(primeiro);
+                primeiro= excluir_pets(primeiro);
                 getch();
                 system("cls");
                 break;
@@ -101,7 +101,7 @@ main()
                 printf(" %c----------------------------------------------------------------------------%c\n",201,187);
                 printf(" | ");printf("\t\t\t       ALTERAR CADASTRADOS");printf("\t\t\t      |\n");
                 printf(" %c----------------------------------------------------------------------------%c\n",200,188);
-                alterar_restaurantes(primeiro);
+                alterar_pets(primeiro);
                 getch();
                 system("cls");
                 break;
@@ -120,37 +120,37 @@ main()
     }
 }
 
-Lista* inserir_restaurantes (Lista *primeiro){
-    Lista restaurante;
+Lista* inserir_pets (Lista *primeiro){
+    Lista pet;
     Lista *atual= primeiro;
     char identificador= 'F';
 
     //Lendo as informa��es do restaurante.
     printf("  Nome: ");
-    fflush (stdin); fgets(restaurante.nome, 40, stdin); printf ("\n");
+    fflush (stdin); fgets(pet.nome, 40, stdin); printf ("\n");
     printf("  Endere%co: ",135);
-    fflush (stdin); fgets(restaurante.endereco, 40, stdin); printf ("\n");
+    fflush (stdin); fgets(pet.endereco, 40, stdin); printf ("\n");
     printf("  C%cdigo: ",162);
-    scanf("%u",&restaurante.codigo);printf ("\n");
+    scanf("%u",&pet.codigo);printf ("\n");
 
     //Verificando se o cadastro j� existe.
     for(atual=primeiro; atual!=NULL; atual=atual->prox){
-        if(atual->codigo==restaurante.codigo){
+        if(atual->codigo==pet.codigo){
             identificador= 'V';
             break;
         }
     }
-
-    if(identificador!='V' && (strlen(restaurante.nome)!=1 && strlen(restaurante.endereco)!=1)){
+    
+    if(identificador!='V' && (strlen(pet.nome)!=1 && strlen(pet.endereco)!=1)){
         //Alocando os espa�os e guardando as informa��es do restaurante.
-        Lista* NovoRestaurante=(Lista*) malloc (sizeof(Lista));
-        strcpy(NovoRestaurante->nome, restaurante.nome);
-        strcpy(NovoRestaurante->endereco, restaurante.endereco);
-        NovoRestaurante->codigo= restaurante.codigo;
-        NovoRestaurante->prox= primeiro;
+        Lista* NovoPet=(Lista*) malloc (sizeof(Lista));
+        strcpy(NovoPet->nome, pet.nome);
+        strcpy(NovoPet->endereco, pet.endereco);
+        NovoPet->codigo= pet.codigo;
+        NovoPet->prox= primeiro;
         printf("  Cadastro realizado com sucesso.");
         printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
-        return NovoRestaurante;
+        return NovoPet;
     }else{
         printf("  Cadastro inv%clido.",160);
         printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
@@ -158,7 +158,7 @@ Lista* inserir_restaurantes (Lista *primeiro){
     }
 }
 
-void listar_restaurantes (Lista* primeiro){
+void listar_pets (Lista* primeiro){
     Lista* atual;//Ponteiro para percorrer a lista sem perder a refer�ncia do primeiro elemento da lista.
 
     //Imprimindo os restaurantes da lista, e suas repectivas informa��es.
@@ -176,7 +176,7 @@ void listar_restaurantes (Lista* primeiro){
     printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
 }
 
-Lista* excluir_restaurantes(Lista *primeiro){
+Lista* excluir_pets(Lista *primeiro){
 
     Lista *anterior= NULL;//Ponteiro para saber o elemento anterior ao elemento atual da lista.
     Lista *atual= primeiro;//Ponteiro para percorrer a lista sem perder o primeiro elemento da lista.
@@ -217,7 +217,7 @@ Lista* excluir_restaurantes(Lista *primeiro){
 }
 
 //Fun��o para alterar restaurantes.
-void alterar_restaurantes(Lista* primeiro){
+void alterar_pets(Lista* primeiro){
     char nome_substituto[40], endereco_substituto[40];
     unsigned long int codigo;
     Lista* atual=primeiro;
