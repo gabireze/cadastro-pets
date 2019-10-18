@@ -188,16 +188,28 @@ void listar_pets (Lista* primeiro){
 
     //Imprimindo os restaurantes da lista, e suas repectivas informa��es.
     for(atual= primeiro ; atual!= NULL; atual= atual->prox){
-        printf("\n  Nome: ");
-        printf("%s", atual->nome);
-//        printf("\n  Endere%co: ",135);
-//        printf("%s", atual->endereco);
-        printf("\n  C%cdigo: ",162 );
+    	printf("-----//-----");
+		printf("\n  ID #");
         printf("%u", atual->codigo);
+		printf("\n  Nome: ");
+        printf("%s", atual->nome);
+        printf("\n  Esp�cie: ");
+        printf("%s", atual->especie);
+        printf("\n  Ra�a: ");
+        printf("%s", atual->raca);
+        printf("\n  Sexo: ");
+        printf("%s", atual->sexo);
+        printf("\n  Idade: ");
+        printf("%s", atual->idade);
+        printf("\n  Data de Nascimento: ");
+        printf("%s", atual->data_nasc);
+        printf("\n  Descri��o: ");
+        printf("%s", atual->descricao);
+        printf("-----//-----");
         printf("\n\n");
     }
     if(primeiro==NULL)
-        printf("  Nenhum restaurante cadastrado.");
+        printf("  Nenhum pet cadastrado.");
     printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
 }
 
