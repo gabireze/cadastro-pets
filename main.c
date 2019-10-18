@@ -2,13 +2,15 @@
 #include <conio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <locale.h>
 
 typedef struct lista{
     char nome[40];
     char especie[40];
     char raca[40];
-    char sexo[2];
-    int idade[2];
+    char sexo[1];
+    char idade[2];
     char data_nasc[10];
     char descricao[140];
     unsigned long int codigo;
@@ -23,6 +25,8 @@ void alterar_pets(Lista* primeiro);
 
 main()
 {
+	setlocale(LC_ALL, "Portuguese");
+	
     //Declara��o de vari�veis
     Lista *primeiro= NULL;
     char opcao;
@@ -128,9 +132,19 @@ Lista* inserir_pets (Lista *primeiro){
     //Lendo as informa��es do restaurante.
     printf("  Nome: ");
     fflush (stdin); fgets(pet.nome, 40, stdin); printf ("\n");
-    printf("  Endere%co: ",135);
-    fflush (stdin); fgets(pet.endereco, 40, stdin); printf ("\n");
-    printf("  C%cdigo: ",162);
+    printf("  Esp�cie: ");
+    fflush (stdin); fgets(pet.especie, 40, stdin); printf ("\n");
+    printf("  Ra�a: ");
+    fflush (stdin); fgets(pet.raca, 40, stdin); printf ("\n");
+	printf("  Sexo (M ou F): ");
+    fflush (stdin); fgets(pet.sexo, 2, stdin); printf ("\n");
+    printf("  Idade: ");
+    fflush (stdin); fgets(pet.idade, 2, stdin); printf ("\n");
+    printf("  Data de Nascimento: ");
+    fflush (stdin); fgets(pet.data_nasc, 10, stdin); printf ("\n");
+    printf("  Descri��o: ");
+    fflush (stdin); fgets(pet.descricao, 140, stdin); printf ("\n");
+    printf("  C�digo: ",162);
     scanf("%u",&pet.codigo);printf ("\n");
 
     //Verificando se o cadastro j� existe.
@@ -141,18 +155,29 @@ Lista* inserir_pets (Lista *primeiro){
         }
     }
     
-    if(identificador!='V' && (strlen(pet.nome)!=1 && strlen(pet.endereco)!=1)){
+    if(identificador!='V' && strlen(pet.nome)!=1){
         //Alocando os espa�os e guardando as informa��es do restaurante.
         Lista* NovoPet=(Lista*) malloc (sizeof(Lista));
+		if (NovoPet == NULL) {
+    		fprintf(stderr, "Falha ao alocar mem�ria");
+    		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+    		return primeiro;
+		}
         strcpy(NovoPet->nome, pet.nome);
-        strcpy(NovoPet->endereco, pet.endereco);
+        strcpy(NovoPet->especie, pet.especie);
+        strcpy(NovoPet->raca, pet.raca);
+        strcpy(NovoPet->sexo, pet.sexo);
+        strcpy(NovoPet->idade, pet.idade);
+        strcpy(NovoPet->data_nasc, pet.data_nasc);
+        strcpy(NovoPet->descricao, pet.descricao);
+//        strcpy(NovoPet->endereco, pet.endereco);
         NovoPet->codigo= pet.codigo;
         NovoPet->prox= primeiro;
         printf("  Cadastro realizado com sucesso.");
         printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
         return NovoPet;
     }else{
-        printf("  Cadastro inv%clido.",160);
+        printf("  Cadastro inv�lido.",160);
         printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
         return primeiro;
     }
@@ -165,8 +190,8 @@ void listar_pets (Lista* primeiro){
     for(atual= primeiro ; atual!= NULL; atual= atual->prox){
         printf("\n  Nome: ");
         printf("%s", atual->nome);
-        printf("\n  Endere%co: ",135);
-        printf("%s", atual->endereco);
+//        printf("\n  Endere%co: ",135);
+//        printf("%s", atual->endereco);
         printf("\n  C%cdigo: ",162 );
         printf("%u", atual->codigo);
         printf("\n\n");
@@ -238,8 +263,8 @@ void alterar_pets(Lista* primeiro){
         fflush (stdin); fgets(nome_substituto, 40, stdin);
         strcpy(atual->nome,nome_substituto);
         printf("\n  Novo endere%co: ",135);
-        fflush (stdin); fgets(endereco_substituto, 40, stdin); printf ("\n");
-        strcpy(atual->endereco,endereco_substituto);
+//        fflush (stdin); fgets(endereco_substituto, 40, stdin); printf ("\n");
+//        strcpy(atual->endereco,endereco_substituto);
         printf("  Dados alterados com sucesso.");
     }else{
         printf("\n  Restaurante n%co encontrado.",198);
