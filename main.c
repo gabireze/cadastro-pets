@@ -5,12 +5,17 @@
 
 typedef struct lista{
     char nome[40];
-    char endereco[40];
+    char especie[40];
+    char raca[40];
+    char sexo[2];
+    int idade[2];
+    char data_nasc[10];
+    char descricao[140];
     unsigned long int codigo;
     struct lista* prox;
 }Lista;
 
-//Declaração de funções.
+//Declaraï¿½ï¿½o de funï¿½ï¿½es.
 Lista* inserir_restaurantes(Lista* primeiro);
 void listar_restaurantes(Lista* primeiro);
 Lista* excluir_restaurantes(Lista* primeiro);
@@ -18,11 +23,11 @@ void alterar_restaurantes(Lista* primeiro);
 
 main()
 {
-    //Declaração de variáveis
+    //Declaraï¿½ï¿½o de variï¿½veis
     Lista *primeiro= NULL;
     char opcao;
 
-    //Artifício para repetir o programa.
+    //Artifï¿½cio para repetir o programa.
     while(opcao!='s')
     {
         //Menu de opcoes 
@@ -103,12 +108,12 @@ main()
 
             case 'S':
             case 's':
-                //Artifício para sair do programa.
+                //Artifï¿½cio para sair do programa.
                 opcao='s';
                 break;
 
             default:
-                //Artifício que previne a situação de um usuário qualquer, digitar uma opcão inexistente no menu.
+                //Artifï¿½cio que previne a situaï¿½ï¿½o de um usuï¿½rio qualquer, digitar uma opcï¿½o inexistente no menu.
                 system("cls");
                 break;
         }
@@ -120,7 +125,7 @@ Lista* inserir_restaurantes (Lista *primeiro){
     Lista *atual= primeiro;
     char identificador= 'F';
 
-    //Lendo as informações do restaurante.
+    //Lendo as informaï¿½ï¿½es do restaurante.
     printf("  Nome: ");
     fflush (stdin); fgets(restaurante.nome, 40, stdin); printf ("\n");
     printf("  Endere%co: ",135);
@@ -128,7 +133,7 @@ Lista* inserir_restaurantes (Lista *primeiro){
     printf("  C%cdigo: ",162);
     scanf("%u",&restaurante.codigo);printf ("\n");
 
-    //Verificando se o cadastro já existe.
+    //Verificando se o cadastro jï¿½ existe.
     for(atual=primeiro; atual!=NULL; atual=atual->prox){
         if(atual->codigo==restaurante.codigo){
             identificador= 'V';
@@ -137,7 +142,7 @@ Lista* inserir_restaurantes (Lista *primeiro){
     }
 
     if(identificador!='V' && (strlen(restaurante.nome)!=1 && strlen(restaurante.endereco)!=1)){
-        //Alocando os espaços e guardando as informações do restaurante.
+        //Alocando os espaï¿½os e guardando as informaï¿½ï¿½es do restaurante.
         Lista* NovoRestaurante=(Lista*) malloc (sizeof(Lista));
         strcpy(NovoRestaurante->nome, restaurante.nome);
         strcpy(NovoRestaurante->endereco, restaurante.endereco);
@@ -154,9 +159,9 @@ Lista* inserir_restaurantes (Lista *primeiro){
 }
 
 void listar_restaurantes (Lista* primeiro){
-    Lista* atual;//Ponteiro para percorrer a lista sem perder a referência do primeiro elemento da lista.
+    Lista* atual;//Ponteiro para percorrer a lista sem perder a referï¿½ncia do primeiro elemento da lista.
 
-    //Imprimindo os restaurantes da lista, e suas repectivas informações.
+    //Imprimindo os restaurantes da lista, e suas repectivas informaï¿½ï¿½es.
     for(atual= primeiro ; atual!= NULL; atual= atual->prox){
         printf("\n  Nome: ");
         printf("%s", atual->nome);
@@ -177,7 +182,7 @@ Lista* excluir_restaurantes(Lista *primeiro){
     Lista *atual= primeiro;//Ponteiro para percorrer a lista sem perder o primeiro elemento da lista.
     unsigned long int codigo=0;
 
-    //Requisitando e lendo o código do restaurante a ser excluído.
+    //Requisitando e lendo o cï¿½digo do restaurante a ser excluï¿½do.
     printf("  C%cdigo do restaurante a ser exclu%cdo: ", 162,161);
     fflush(stdin);
     scanf("%u",&codigo);
@@ -188,7 +193,7 @@ Lista* excluir_restaurantes(Lista *primeiro){
         atual= atual->prox;
     }
 
-    //Mensagem caso o restaurante não seja encontrado.
+    //Mensagem caso o restaurante nï¿½o seja encontrado.
     if(atual==NULL){
         printf("\n  Restaurante n%co encontrado.", 198);
         printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
@@ -205,19 +210,19 @@ Lista* excluir_restaurantes(Lista *primeiro){
         anterior->prox= atual->prox;
     }
 
-    //Desalocando o espaço da memória.
+    //Desalocando o espaï¿½o da memï¿½ria.
     free(atual);
     printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
     return primeiro;
 }
 
-//Função para alterar restaurantes.
+//Funï¿½ï¿½o para alterar restaurantes.
 void alterar_restaurantes(Lista* primeiro){
     char nome_substituto[40], endereco_substituto[40];
     unsigned long int codigo;
     Lista* atual=primeiro;
 
-    //Requisitando e lendo o código do restaurante a ser alterado.
+    //Requisitando e lendo o cï¿½digo do restaurante a ser alterado.
     printf("  C%cdigo do restaurante a ser alterado: ", 162);
     fflush(stdin);
     scanf("%u",&codigo);
