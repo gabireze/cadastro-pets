@@ -140,6 +140,7 @@ main() {
 Lista * inserir_pets(Lista * primeiro) {
   Lista pet;
   Lista * atual = primeiro;
+  Lista * anterior = NULL;
   char identificador = 'F';
 
   //Lendo as informacoes do pet
@@ -171,10 +172,20 @@ Lista * inserir_pets(Lista * primeiro) {
   fflush(stdin);
   fgets(pet.descricao, 140, stdin);
   printf("\n");
-  printf("  Código: ", 162);
-  scanf("%u", &pet.codigo);
-  printf("\n");
-      
+  
+	int codigo = 0;
+	while (atual != NULL && atual -> codigo != codigo) {
+    	codigo++;
+    	anterior = atual;
+    	atual = atual -> prox;
+	}
+  
+  if (anterior == NULL) {
+    pet.codigo = 1;
+  } else {
+  	pet.codigo = anterior->codigo + 1;
+  }
+  
 	time_t     now;
     struct tm  ts;
 	
