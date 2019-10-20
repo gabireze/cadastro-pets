@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
+#include <time.h>
+#include <unistd.h>
 
 typedef struct lista {
   char nome[40];
@@ -13,6 +15,8 @@ typedef struct lista {
   char idade[3];
   char data_nasc[11];
   char descricao[140];
+  char criado_em[80];
+  char atualizado_em[80];
   unsigned long int codigo;
   struct lista * prox;
 }
@@ -170,6 +174,13 @@ Lista * inserir_pets(Lista * primeiro) {
   printf("  Código: ", 162);
   scanf("%u", &pet.codigo);
   printf("\n");
+      
+	time_t     now;
+    struct tm  ts;
+	
+	time(&now);
+	ts = *localtime(&now);    
+	strftime(pet.criado_em, sizeof(pet.criado_em), "%H:%M:%S %a %d-%m-%Y", &ts);
 
   //Verificando se o cadastro ja existe.
   for (atual = primeiro; atual != NULL; atual = atual -> prox) {
@@ -194,6 +205,7 @@ Lista * inserir_pets(Lista * primeiro) {
     strcpy(NovoPet -> idade, pet.idade);
     strcpy(NovoPet -> data_nasc, pet.data_nasc);
     strcpy(NovoPet -> descricao, pet.descricao);
+    strcpy(NovoPet -> criado_em, pet.criado_em);
     NovoPet -> codigo = pet.codigo;
     NovoPet -> prox = primeiro;
     printf("  Cadastro realizado com sucesso.");
@@ -228,6 +240,12 @@ void listar_pets(Lista * primeiro) {
     printf("%s", atual -> data_nasc);
     printf("\n  Descrição: ");
     printf("%s", atual -> descricao);
+    printf("\n  Criado em ");
+    printf("%s\n", atual -> criado_em);
+	if (strcmp (atual->atualizado_em, "") != 0){
+    printf("\n  Atualizado em ");
+    printf("%s\n", atual ->atualizado_em);
+	}
     printf("-----//-----");
     printf("\n\n");
   }
@@ -278,7 +296,7 @@ Lista * excluir_pets(Lista * primeiro) {
 
 //Funcao para alterar pet
 void alterar_pets(Lista * primeiro) {
-  char nome_substituto[40], especie_substituto[40], raca_substituto[40], sexo_substituto[2], idade_substituto[3], data_nasc_substituto[11], descricao_substituto[140];
+  char nome_substituto[40], especie_substituto[40], raca_substituto[40], sexo_substituto[2], idade_substituto[3], data_nasc_substituto[11], descricao_substituto[140], atualizado_em[80];
   unsigned long int codigo;
   Lista * atual = primeiro;
 
@@ -294,41 +312,113 @@ void alterar_pets(Lista * primeiro) {
 
   //Alterando os dados do pet.
   if (atual != NULL) {
-    printf("\n  Novo nome: ");
-    fflush(stdin);
-    fgets(nome_substituto, 40, stdin);
-    strcpy(atual -> nome, nome_substituto);
-    printf("\n  Nova espécie: ");
-    fflush(stdin);
-    fgets(especie_substituto, 40, stdin);
-    printf("\n");
-    strcpy(atual -> especie, especie_substituto);
-    printf("\n  Nova raça: ");
-    fflush(stdin);
-    fgets(raca_substituto, 40, stdin);
-    printf("\n");
-    strcpy(atual -> raca, raca_substituto);
-    printf("\n  Novo sexo: ");
-    fflush(stdin);
-    fgets(sexo_substituto, 2, stdin);
-    printf("\n");
-    strcpy(atual -> sexo, sexo_substituto);
-    printf("\n  Nova idade: ");
-    fflush(stdin);
-    fgets(idade_substituto, 2, stdin);
-    printf("\n");
-    strcpy(atual -> idade, idade_substituto);
-    printf("\n  Nova data de nascimento: ");
-    fflush(stdin);
-    fgets(data_nasc_substituto, 11, stdin);
-    printf("\n");
-    strcpy(atual -> data_nasc, data_nasc_substituto);
-    printf("\n  Nova descrição: ");
-    fflush(stdin);
-    fgets(descricao_substituto, 140, stdin);
-    printf("\n");
-    strcpy(atual -> descricao, descricao_substituto);
-    printf("  Dados alterados com sucesso.");
+  	int opcao;
+	printf("\n Qual item deseja alterar? ");
+	printf("\n<1> Nome");
+	printf("\n<2> Espécie");
+	printf("\n<3> Sexo");
+	printf("\n<4> Raça");
+	printf("\n<5> Idade");
+	printf("\n<6> Data de Nascimento");
+	printf("\n<7> Descrição");
+	printf("\n<0> Sair\n\n");
+	scanf("%d",&opcao);
+	
+	time_t     now;
+    struct tm  ts;
+	
+	switch(opcao){
+		case 1:
+			printf("\n  Novo nome: ");
+			fflush(stdin);
+			fgets(nome_substituto, 40, stdin);
+			strcpy(atual -> nome, nome_substituto);
+			time(&now);
+			ts = *localtime(&now);    
+			strftime(atualizado_em, sizeof(atualizado_em), "%H:%M:%S %a %d-%m-%Y", &ts);
+			strcpy(atual -> atualizado_em, atualizado_em);
+			break;
+    
+    	case 2:
+    		printf("\n  Nova espécie: ");
+			fflush(stdin);
+			fgets(especie_substituto, 40, stdin);
+			printf("\n");
+			strcpy(atual -> especie, especie_substituto);
+			time(&now);
+			ts = *localtime(&now);    
+			strftime(atualizado_em, sizeof(atualizado_em), "%H:%M:%S %a %d-%m-%Y", &ts);
+			strcpy(atual -> atualizado_em, atualizado_em);
+			break;
+		
+		case 3:
+		    printf("\n  Nova raça: ");
+			fflush(stdin);
+			fgets(raca_substituto, 40, stdin);
+			printf("\n");
+			strcpy(atual -> raca, raca_substituto);
+			time(&now);
+			ts = *localtime(&now);    
+			strftime(atualizado_em, sizeof(atualizado_em), "%H:%M:%S %a %d-%m-%Y", &ts);
+			strcpy(atual -> atualizado_em, atualizado_em);
+			break;
+			
+		case 4:
+			printf("\n  Novo sexo: ");
+			fflush(stdin);
+			fgets(sexo_substituto, 2, stdin);
+			printf("\n");
+			strcpy(atual -> sexo, sexo_substituto);
+			time(&now);
+			ts = *localtime(&now);    
+			strftime(atualizado_em, sizeof(atualizado_em), "%H:%M:%S %a %d-%m-%Y", &ts);
+			strcpy(atual -> atualizado_em, atualizado_em);
+			break;
+			
+		case 5:
+		    printf("\n  Nova idade: ");
+			fflush(stdin);
+			fgets(idade_substituto, 2, stdin);
+			printf("\n");
+			strcpy(atual -> idade, idade_substituto);
+			time(&now);
+			ts = *localtime(&now);    
+			strftime(atualizado_em, sizeof(atualizado_em), "%H:%M:%S %a %d-%m-%Y", &ts);
+			strcpy(atual -> atualizado_em, atualizado_em);
+			break;
+			
+		case 6:
+		    printf("\n  Nova data de nascimento: ");
+			fflush(stdin);
+			fgets(data_nasc_substituto, 11, stdin);
+			printf("\n");
+			strcpy(atual -> data_nasc, data_nasc_substituto);
+			time(&now);
+			ts = *localtime(&now);    
+			strftime(atualizado_em, sizeof(atualizado_em), "%H:%M:%S %a %d-%m-%Y", &ts);
+			strcpy(atual -> atualizado_em, atualizado_em);
+			break;
+		
+		case 7:
+			printf("\n  Nova descrição: ");
+			fflush(stdin);
+			fgets(descricao_substituto, 140, stdin);
+			printf("\n");
+			strcpy(atual -> descricao, descricao_substituto);
+			time(&now);
+			ts = *localtime(&now);    
+			strftime(atualizado_em, sizeof(atualizado_em), "%H:%M:%S %a %d-%m-%Y", &ts);
+			strcpy(atual -> atualizado_em, atualizado_em);
+			break;
+			
+		default:
+			printf("\n Opção inválida");
+			alterar_pets(primeiro);
+			getch();
+			system("cls");
+				
+	}
+    printf("  Dado alterado com sucesso.");
   } else {
     printf("\n  Pet não encontrado.", 198);
   }
