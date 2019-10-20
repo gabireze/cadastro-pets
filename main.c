@@ -27,7 +27,7 @@ Lista * inserir_pets(Lista * primeiro);
 void listar_pets(Lista * primeiro);
 Lista * excluir_pets(Lista * primeiro);
 void alterar_pets(Lista * primeiro);
-void buscar_pets(Lista * primeiro);
+//void buscar_pets(Lista * primeiro);
 
 main() {
   setlocale(LC_ALL, "Portuguese");
@@ -46,19 +46,29 @@ main() {
     printf(" *----------------------------------------------------------------------------*\n");
     printf("               |   MENU   ");
     printf("|\t\t\t\t      \n");
-    printf("   *-----------*----------*------------* \n");
-    printf("   | <A>  Novo cadastro                |\n");
-    printf("   |-----------------------------------|\n");
-    printf("   | <B>  Listar                       |\n");
-    printf("   |-----------------------------------|\n");
-    printf("   | <C>  Excluir cadastro             |\n");
-    printf("   |-----------------------------------|\n");
-    printf("   | <D>  Alterar cadastro             |\n");
-    printf("   |-----------------------------------|\n");
-    printf("   | <E>  Buscar cadastro              |\n");
-    printf("   |-----------------------------------|\n");
-    printf("   | <S>  Sair                         |\n");
-    printf("   *-----------------------------------*");
+    printf("   *-----------*-------------*----------------------* \n");
+    printf("   | <A> Inclusão de novos animais                   |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <B>  Remoção de animais                         |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <C>  Alteração de informações                   |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <D>  Busca de um animal a partir do seu nome    |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <E>  Busca de animais por espécie               |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <E>  Busca de animais por espécie e raça        |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <E>  Busca de animais por espécie, raça e sexo  |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <E>  Contagem (quantidade de animais)           |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <E>  Contagem por espécie                       |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <S>  Listagem de todos os animais cadastrados   |\n");
+    printf("   |-------------------------------------------------|\n");
+    printf("   | <S>  Sair                                       |\n");
+    printf("   *-------------------------------------------------*\n");
 
     //Lendo a opcao do menu   
     fflush(stdin);
@@ -119,6 +129,20 @@ main() {
       printf("\t\t\t      |\n");
       printf(" *----------------------------------------------------------------------------*\n", 200, 188);
       alterar_pets(primeiro);
+      getch();
+      system("cls");
+      break;
+      
+    case 'E':
+    case 'e':
+      //Alterando pet da lista. 
+      system("cls");
+      printf(" *----------------------------------------------------------------------------*\n", 201, 187);
+      printf(" | ");
+      printf("\t\t\t       BUSCAR CADASTRADOS");
+      printf("\t\t\t      |\n");
+      printf(" *----------------------------------------------------------------------------*\n", 200, 188);
+      //buscar_pets(primeiro);
       getch();
       system("cls");
       break;
@@ -253,16 +277,19 @@ void listar_pets(Lista * primeiro) {
     printf("%s", atual -> descricao);
     printf("\n  Criado em ");
     printf("%s\n", atual -> criado_em);
+	
 	if (strcmp (atual->atualizado_em, "") != 0){
-    printf("\n  Atualizado em ");
-    printf("%s\n", atual ->atualizado_em);
+		printf("\n  Atualizado em ");
+		printf("%s\n", atual ->atualizado_em);
 	}
-    printf("-----//-----");
+    
+	printf("-----//-----");
     printf("\n\n");
   }
-  if (primeiro == NULL)
-    printf("  Nenhum pet cadastrado.");
-  printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	if (primeiro == NULL){
+		printf("  Nenhum pet cadastrado.");
+  		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	}
 }
 
 Lista * excluir_pets(Lista * primeiro) {
