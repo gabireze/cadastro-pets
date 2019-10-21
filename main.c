@@ -6,17 +6,18 @@
 #include <locale.h>
 #include <time.h>
 #include <unistd.h>
+#include <conio.h>
 
 typedef struct lista {
-  char nome[40];
-  char especie[40];
-  char raca[40];
+  char nome[26];
+  char especie[26];
+  char raca[26];
   char sexo[2];
   char idade[3];
-  char data_nasc[11];
-  char descricao[140];
-  char criado_em[80];
-  char atualizado_em[80];
+  char data_nasc[12];
+  char descricao[101];
+  char criado_em[51];
+  char atualizado_em[51];
   unsigned long int codigo;
   struct lista * prox;
 }
@@ -27,11 +28,16 @@ Lista * inserir_pets(Lista * primeiro);
 void listar_pets(Lista * primeiro);
 Lista * excluir_pets(Lista * primeiro);
 void alterar_pets(Lista * primeiro);
-//void buscar_pets(Lista * primeiro);
+void contar_pets(Lista * primeiro);
+void contar_especie_pets(Lista * primeiro);
+void buscar_nome_pets(Lista * primeiro);
+void buscar_especie_pets(Lista * primeiro);
+void buscar_especie_raca_pets(Lista * primeiro);
+void buscar_especie_raca_sexo_pets(Lista * primeiro);
 
 main() {
   setlocale(LC_ALL, "Portuguese");
-
+  system("color fc");
   //Declararação de variáveis
   Lista * primeiro = NULL;
   char opcao;
@@ -47,27 +53,27 @@ main() {
     printf("               |   MENU   ");
     printf("|\t\t\t\t      \n");
     printf("   *-----------*-------------*----------------------* \n");
-    printf("   | <A> Inclusão de novos animais                   |\n");
+    printf("   | <A> Inclusão de novos animais                   |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <B>  Remoção de animais                         |\n");
+    printf("   | <B>  Remoção de animais                         |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <C>  Alteração de informações                   |\n");
+    printf("   | <C>  Alteração de informações                   |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <D>  Busca de um animal a partir do seu nome    |\n");
+    printf("   | <D>  Busca de um animal a partir do seu nome    |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <E>  Busca de animais por espécie               |\n");
+    printf("   | <E>  Busca de animais por espécie               |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <E>  Busca de animais por espécie e raça        |\n");
+    printf("   | <F>  Busca de animais por espécie e raça        |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <E>  Busca de animais por espécie, raça e sexo  |\n");
+    printf("   | <G>  Busca de animais por espécie, raça e sexo  |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <E>  Contagem (quantidade de animais)           |\n");
+    printf("   | <H>  Contagem (quantidade de animais)           |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <E>  Contagem por espécie                       |\n");
+    printf("   | <I>  Contagem por espécie                       |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <S>  Listagem de todos os animais cadastrados   |\n");
+    printf("   | <J>  Listagem de todos os animais cadastrados   |\n"); //done
     printf("   |-------------------------------------------------|\n");
-    printf("   | <S>  Sair                                       |\n");
+    printf("   | <S>  Sair                                       |\n"); //done
     printf("   *-------------------------------------------------*\n");
 
     //Lendo a opcao do menu   
@@ -78,54 +84,58 @@ main() {
     switch (opcao) {
     case 'A':
     case 'a':
+    	system("color 02");
       //Inserindo os pet.
       fflush(stdin);
       system("cls");
       printf(" *----------------------------------------------------------------------------*\n", 201, 187);
       printf(" | ");
-      printf("\t\t\t          NOVO CADASTRO     ");
-      printf("\t\t\t      |\n");
+      printf("\t\t\t          INCLUSÃO DE NOVOS ANIMAIS     ");
+      printf("\t\t|\n");
       printf(" *----------------------------------------------------------------------------*\n", 200, 188);
       primeiro = inserir_pets(primeiro);
       getch();
       system("cls");
       break;
 
-    case 'B':
-    case 'b':
+    case 'J':
+    case 'j':
+    	system("color 90");
       //Listando os pet.
       system("cls");
       printf(" *----------------------------------------------------------------------------*\n", 201, 187);
       printf(" | ");
-      printf("\t\t\t     PETS CADASTRADOS");
-      printf("\t\t\t      |\n");
+      printf("\t\t\t     LISTAGEM DE TODOS OS ANIMAIS CADASTRADOS");
+      printf("\t\t\t|\n");
       printf(" *----------------------------------------------------------------------------*\n", 200, 188);
       listar_pets(primeiro);
       getch();
       system("cls");
       break;
 
-    case 'C':
-    case 'c':
+    case 'B':
+    case 'b':
+    	system("color 4f");
       //Excluindo pet da lista.
       system("cls");
       printf(" *----------------------------------------------------------------------------*\n", 201, 187);
       printf(" | ");
-      printf("\t\t\t        EXCLUIR CADASTROS");
-      printf("\t\t\t      |\n");
+      printf("\t\t\t        REMOÇÃO DE ANIMAIS");
+      printf("\t\t\t     |\n");
       printf(" *----------------------------------------------------------------------------*\n", 200, 188);
       primeiro = excluir_pets(primeiro);
       getch();
       system("cls");
       break;
 
-    case 'D':
-    case 'd':
+    case 'C':
+    case 'c':
+    	system("color fb");
       //Alterando pet da lista. 
       system("cls");
       printf(" *----------------------------------------------------------------------------*\n", 201, 187);
       printf(" | ");
-      printf("\t\t\t       ALTERAR CADASTRADOS");
+      printf("\t\t\t       ALTERAÇÃO DE INFORMAÇÕES");
       printf("\t\t\t      |\n");
       printf(" *----------------------------------------------------------------------------*\n", 200, 188);
       alterar_pets(primeiro);
@@ -133,22 +143,99 @@ main() {
       system("cls");
       break;
       
-    case 'E':
-    case 'e':
-      //Alterando pet da lista. 
+	case 'H':
+    case 'h':
+    	system("color 57");
+      //Contagem de todos os animais cadastrados
       system("cls");
       printf(" *----------------------------------------------------------------------------*\n", 201, 187);
       printf(" | ");
-      printf("\t\t\t       BUSCAR CADASTRADOS");
-      printf("\t\t\t      |\n");
+      printf("\t\t\t       CONTAGEM (QUANTIDADE DE ANIMAIS)");
+      printf("\t\t\t|\n");
       printf(" *----------------------------------------------------------------------------*\n", 200, 188);
-      //buscar_pets(primeiro);
+      contar_pets(primeiro);
+      getch();
+      system("cls");
+      break;
+      
+    case 'I':
+    case 'i':
+    	system("color 86");
+      //Contagem de animais cadastrados por espécie
+      system("cls");
+      printf(" *----------------------------------------------------------------------------*\n", 201, 187);
+      printf(" | ");
+      printf("\t\t\t       CONTAGEM POR ESPÉCIE");
+      printf("\t\t\t       |\n");
+      printf(" *----------------------------------------------------------------------------*\n", 200, 188);
+      contar_especie_pets(primeiro);
+      getch();
+      system("cls");
+      break;
+      
+    case 'D':
+    case 'd':
+    	system("color 0c");
+      //Contagem de animais cadastrados por espécie
+      system("cls");
+      printf(" *----------------------------------------------------------------------------*\n", 201, 187);
+      printf(" | ");
+      printf("\t\t\t       BUSCA DE UM ANIMAL A PARTIR DO SEU NOME");
+      printf("\t      |\n");
+      printf(" *----------------------------------------------------------------------------*\n", 200, 188);
+      buscar_nome_pets(primeiro);
+      getch();
+      system("cls");
+      break;
+      
+	case 'E':
+    case 'e':
+    	system("color bd");
+      //Contagem de animais cadastrados por espécie
+      system("cls");
+      printf(" *----------------------------------------------------------------------------*\n", 201, 187);
+      printf(" | ");
+      printf("\t\t\t       BUSCA DE ANIMAIS POR ESPÉCIE");
+      printf("\t\t       |\n");
+      printf(" *----------------------------------------------------------------------------*\n", 200, 188);
+      buscar_especie_pets(primeiro);
+      getch();
+      system("cls");
+      break;
+      
+    case 'F':
+    case 'f':
+    	system("color f6");
+      //Contagem de animais cadastrados por espécie
+      system("cls");
+      printf(" *----------------------------------------------------------------------------*\n", 201, 187);
+      printf(" | ");
+      printf("\t\t\t  BUSCA DE ANIMAIS POR ESPÉCIE E RAÇA");
+      printf("\t\t     |\n");
+      printf(" *----------------------------------------------------------------------------*\n", 200, 188);
+      buscar_especie_raca_pets(primeiro);
+      getch();
+      system("cls");
+      break;
+      
+    case 'G':
+    case 'g':
+    	system("color eb");
+      //Contagem de animais cadastrados por espécie
+      system("cls");
+      printf(" *----------------------------------------------------------------------------*\n", 201, 187);
+      printf(" | ");
+      printf("\t\t    BUSCA DE ANIMAIS POR ESPÉCIE, RAÇA E SEXO");
+      printf("\t\t      |\n");
+      printf(" *----------------------------------------------------------------------------*\n", 200, 188);
+      buscar_especie_raca_sexo_pets(primeiro);
       getch();
       system("cls");
       break;
 
     case 'S':
     case 's':
+    	system("color 08");
       //Sair do programa.
       opcao = 's';
       break;
@@ -159,7 +246,9 @@ main() {
       break;
     }
   }
+  free(primeiro);
 }
+
 
 Lista * inserir_pets(Lista * primeiro) {
   Lista pet;
@@ -170,15 +259,15 @@ Lista * inserir_pets(Lista * primeiro) {
   //Lendo as informacoes do pet
   printf("  Nome: ");
   fflush(stdin);
-  fgets(pet.nome, 40, stdin);
+  fgets(pet.nome, 26, stdin);
   printf("\n");
   printf("  Espécie: ");
   fflush(stdin);
-  fgets(pet.especie, 40, stdin);
+  fgets(pet.especie, 26, stdin);
   printf("\n");
   printf("  Raça: ");
   fflush(stdin);
-  fgets(pet.raca, 40, stdin);
+  fgets(pet.raca, 26, stdin);
   printf("\n");
   printf("  Sexo (M ou F): ");
   fflush(stdin);
@@ -190,11 +279,11 @@ Lista * inserir_pets(Lista * primeiro) {
   printf("\n");
   printf("  Data de Nascimento: ");
   fflush(stdin);
-  fgets(pet.data_nasc, 11, stdin);
+  fgets(pet.data_nasc, 12, stdin);
   printf("\n");
   printf("  Descrição: ");
   fflush(stdin);
-  fgets(pet.descricao, 140, stdin);
+  fgets(pet.descricao, 101, stdin);
   printf("\n");
   
 	int codigo = 0;
@@ -246,11 +335,308 @@ Lista * inserir_pets(Lista * primeiro) {
     printf("  Cadastro realizado com sucesso.");
     printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
     return NovoPet;
+    free(NovoPet);
   } else {
     printf("  Cadastro inválido.", 160);
     printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
     return primeiro;
   }
+  free(atual);
+free(anterior);
+}
+
+void contar_pets(Lista * primeiro) {
+  Lista * atual; //Ponteiro para percorrer a lista sem perder a referencia do primeiro elemento da lista.
+  int contador=0;
+  //Imprimindo os pets da lista, e suas repectivas informacoes.
+  for (atual = primeiro; atual != NULL; atual = atual -> prox) {
+  	contador++;
+  }
+	if (primeiro == NULL){
+		printf("  Nenhum pet cadastrado.");
+  		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	}
+	if(contador > 1){
+		printf("\n  Existem %d pets cadastrados no sistema",contador);
+	}else if(contador = 1){
+		printf("\n  Existe apenas %d pet cadastrado no sistema",contador);
+	}
+	free(atual);
+}
+
+void contar_especie_pets(Lista * primeiro) {
+  Lista * atual; //Ponteiro para percorrer a lista sem perder a referencia do primeiro elemento da lista.
+    
+	Lista * comparar = (Lista * ) malloc(sizeof(Lista));
+    if (comparar == NULL) {
+      fprintf(stderr, "Falha ao alocar memória.");
+      printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+      return;
+    }
+
+	int contador=0;
+
+	printf(" \n Digite a espécie: ");
+	fflush(stdin);
+	fgets(comparar->especie, 26, stdin);
+
+  //Imprimindo os pets da lista, e suas repectivas informacoes.
+  for (atual = primeiro; atual != NULL; atual = atual -> prox) {
+  	if(strcmp(atual->especie, comparar->especie) == 0){
+		  contador++;
+ 	 }
+  }
+	if (primeiro == NULL){
+		printf("  Nenhum pet cadastrado.");
+  		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	}
+	if(contador > 1){
+		printf("\n  Existem %d pets da espécie %s cadastrados no sistema",contador,comparar->especie);
+	}else if(contador == 1){
+		printf("\n  Existe apenas %d pet da espécie %s cadastrado no sistema",contador,comparar->especie);
+	}
+	free(atual);
+	free(comparar);
+}
+
+void buscar_nome_pets(Lista * primeiro) {
+  Lista * atual; //Ponteiro para percorrer a lista sem perder a referencia do primeiro elemento da lista.
+    
+	Lista * comparar = (Lista * ) malloc(sizeof(Lista));
+    if (comparar == NULL) {
+      fprintf(stderr, "Falha ao alocar memória.");
+      printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+      return;
+    }
+    
+	int contador=0;
+	
+	printf(" \n Digite o nome: ");
+	fflush(stdin);
+	fgets(comparar->nome, 26, stdin);
+
+  //Imprimindo os pets da lista, e suas repectivas informacoes.
+  for (atual = primeiro; atual != NULL; atual = atual -> prox) {
+  	if(strcmp(atual->nome, comparar->nome) == 0){
+	
+	printf("\n-----//-----");
+    printf("\n  ID #");
+    printf("%u", atual -> codigo);
+    printf("\n  Nome: ");
+    printf("%s", atual -> nome);
+    printf("\n  Espécie: ");
+    printf("%s", atual -> especie);
+    printf("\n  Raça: ");
+    printf("%s", atual -> raca);
+    printf("\n  Sexo: ");
+    printf("%s", atual -> sexo);
+    printf("\n  Idade: ");
+    printf("%s", atual -> idade);
+    printf("\n  Data de Nascimento: ");
+    printf("%s", atual -> data_nasc);
+    printf("\n  Descrição: ");
+    printf("%s", atual -> descricao);
+    printf("\n  Criado em ");
+    printf("%s\n", atual -> criado_em);
+	
+	if (strcmp (atual->atualizado_em, "") != 0){
+		printf("  Atualizado em ");
+		printf("%s\n", atual ->atualizado_em);
+	}
+    
+	printf("-----//-----");
+    printf("\n\n");
+ 	 }
+  }
+	if (primeiro == NULL){
+		printf("  Nenhum pet cadastrado.");
+  		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	}
+	free(atual);
+	free(comparar);
+}
+
+void buscar_especie_pets(Lista * primeiro) {
+  Lista * atual; //Ponteiro para percorrer a lista sem perder a referencia do primeiro elemento da lista.
+    
+	Lista * comparar = (Lista * ) malloc(sizeof(Lista));
+    if (comparar == NULL) {
+      fprintf(stderr, "Falha ao alocar memória.");
+      printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+      return;
+    }
+    
+	int contador=0;
+	
+	printf(" \n Digite a espécie: ");
+	fflush(stdin);
+	fgets(comparar->especie, 26, stdin);
+
+  //Imprimindo os pets da lista, e suas repectivas informacoes.
+  for (atual = primeiro; atual != NULL; atual = atual -> prox) {
+  	if(strcmp(atual->especie, comparar->especie) == 0){
+	
+	printf("-----//-----");
+    printf("\n  ID #");
+    printf("%u", atual -> codigo);
+    printf("\n  Nome: ");
+    printf("%s", atual -> nome);
+    printf("\n  Espécie: ");
+    printf("%s", atual -> especie);
+    printf("\n  Raça: ");
+    printf("%s", atual -> raca);
+    printf("\n  Sexo: ");
+    printf("%s", atual -> sexo);
+    printf("\n  Idade: ");
+    printf("%s", atual -> idade);
+    printf("\n  Data de Nascimento: ");
+    printf("%s", atual -> data_nasc);
+    printf("\n  Descrição: ");
+    printf("%s", atual -> descricao);
+    printf("\n  Criado em ");
+    printf("%s\n", atual -> criado_em);
+	
+	if (strcmp (atual->atualizado_em, "") != 0){
+		printf("\n  Atualizado em ");
+		printf("%s\n", atual ->atualizado_em);
+	}
+    
+	printf("-----//-----");
+    printf("\n\n");
+ 	 }
+  }
+	if (primeiro == NULL){
+		printf("  Nenhum pet cadastrado.");
+  		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	}
+	free(atual);
+	free(comparar);
+}
+
+void buscar_especie_raca_pets(Lista * primeiro) {
+  Lista * atual; //Ponteiro para percorrer a lista sem perder a referencia do primeiro elemento da lista.
+    
+	Lista * comparar = (Lista * ) malloc(sizeof(Lista));
+    if (comparar == NULL) {
+      fprintf(stderr, "Falha ao alocar memória.");
+      printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+      return;
+    }
+    
+	int contador=0;
+	
+	printf(" \n Digite a espécie: ");
+	fflush(stdin);
+	fgets(comparar->especie, 26, stdin);
+	printf(" \n Digite a raça: ");
+	fflush(stdin);
+	fgets(comparar->raca, 26, stdin);
+
+  //Imprimindo os pets da lista, e suas repectivas informacoes.
+  for (atual = primeiro; atual != NULL; atual = atual -> prox) {
+  	if(strcmp(atual->especie, comparar->especie) == 0){
+		if(strcmp(atual->raca, comparar->raca) == 0){
+	printf("-----//-----");
+    printf("\n  ID #");
+    printf("%u", atual -> codigo);
+    printf("\n  Nome: ");
+    printf("%s", atual -> nome);
+    printf("\n  Espécie: ");
+    printf("%s", atual -> especie);
+    printf("\n  Raça: ");
+    printf("%s", atual -> raca);
+    printf("\n  Sexo: ");
+    printf("%s", atual -> sexo);
+    printf("\n  Idade: ");
+    printf("%s", atual -> idade);
+    printf("\n  Data de Nascimento: ");
+    printf("%s", atual -> data_nasc);
+    printf("\n  Descrição: ");
+    printf("%s", atual -> descricao);
+    printf("\n  Criado em ");
+    printf("%s\n", atual -> criado_em);
+	
+	if (strcmp (atual->atualizado_em, "") != 0){
+		printf("\n  Atualizado em ");
+		printf("%s\n", atual ->atualizado_em);
+	}
+    
+	printf("-----//-----");
+    printf("\n\n");
+ 	 }}
+  }
+	if (primeiro == NULL){
+		printf("  Nenhum pet cadastrado.");
+  		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	}
+	free(atual);
+	free(comparar);
+}
+
+void buscar_especie_raca_sexo_pets(Lista * primeiro) {
+  Lista * atual; //Ponteiro para percorrer a lista sem perder a referencia do primeiro elemento da lista.
+    
+	Lista * comparar = (Lista * ) malloc(sizeof(Lista));
+    if (comparar == NULL) {
+      fprintf(stderr, "Falha ao alocar memória.");
+      printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+      return;
+    }
+    
+	int contador=0;
+	
+	printf(" \n Digite a espécie: ");
+	fflush(stdin);
+	fgets(comparar->especie, 26, stdin);
+	printf(" \n Digite a raça: ");
+	fflush(stdin);
+	fgets(comparar->raca, 26, stdin);
+	printf(" \n Digite o sexo: ");
+	fflush(stdin);
+	fgets(comparar->sexo, 2, stdin);
+
+  //Imprimindo os pets da lista, e suas repectivas informacoes.
+  for (atual = primeiro; atual != NULL; atual = atual -> prox) {
+  	if(strcmp(atual->especie, comparar->especie) == 0){
+		if(strcmp(atual->raca, comparar->raca) == 0){
+			if(strcmp(atual->sexo, comparar->sexo) == 0){
+	printf("-----//-----");
+    printf("\n  ID #");
+    printf("%u", atual -> codigo);
+    printf("\n  Nome: ");
+    printf("%s", atual -> nome);
+    printf("\n  Espécie: ");
+    printf("%s", atual -> especie);
+    printf("\n  Raça: ");
+    printf("%s", atual -> raca);
+    printf("\n  Sexo: ");
+    printf("%s", atual -> sexo);
+    printf("\n  Idade: ");
+    printf("%s", atual -> idade);
+    printf("\n  Data de Nascimento: ");
+    printf("%s", atual -> data_nasc);
+    printf("\n  Descrição: ");
+    printf("%s", atual -> descricao);
+    printf("\n  Criado em ");
+    printf("%s\n", atual -> criado_em);
+	
+	if (strcmp (atual->atualizado_em, "") != 0){
+		printf("\n  Atualizado em ");
+		printf("%s\n", atual ->atualizado_em);
+	}
+	
+	printf("-----//-----");
+    printf("\n\n");
+			}
+		}
+	}
+  }
+	if (primeiro == NULL){
+		printf("  Nenhum pet cadastrado.");
+  		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	}
+	free(atual);
+	free(comparar);
 }
 
 void listar_pets(Lista * primeiro) {
@@ -290,6 +676,7 @@ void listar_pets(Lista * primeiro) {
 		printf("  Nenhum pet cadastrado.");
   		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
 	}
+	free(atual);
 }
 
 Lista * excluir_pets(Lista * primeiro) {
@@ -330,16 +717,18 @@ Lista * excluir_pets(Lista * primeiro) {
   free(atual);
   printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
   return primeiro;
+  free(atual);
+  free(anterior);
 }
 
 //Funcao para alterar pet
 void alterar_pets(Lista * primeiro) {
-  char nome_substituto[40], especie_substituto[40], raca_substituto[40], sexo_substituto[2], idade_substituto[3], data_nasc_substituto[11], descricao_substituto[140], atualizado_em[80];
+  char nome_substituto[26], especie_substituto[26], raca_substituto[26], sexo_substituto[2], idade_substituto[3], data_nasc_substituto[12], descricao_substituto[101], atualizado_em[51];
   unsigned long int codigo;
   Lista * atual = primeiro;
 
   //Requisitando e lendo o codigo do pet a ser alterado.
-  printf("  Código do pet a ser alterado: ", 162);
+  printf("  Código do pet a ser alterado: ");
   fflush(stdin);
   scanf("%u", & codigo);
 
@@ -369,7 +758,7 @@ void alterar_pets(Lista * primeiro) {
 		case 1:
 			printf("\n  Novo nome: ");
 			fflush(stdin);
-			fgets(nome_substituto, 40, stdin);
+			fgets(nome_substituto, 26, stdin);
 			strcpy(atual -> nome, nome_substituto);
 			time(&now);
 			ts = *localtime(&now);    
@@ -380,7 +769,7 @@ void alterar_pets(Lista * primeiro) {
     	case 2:
     		printf("\n  Nova espécie: ");
 			fflush(stdin);
-			fgets(especie_substituto, 40, stdin);
+			fgets(especie_substituto, 26, stdin);
 			printf("\n");
 			strcpy(atual -> especie, especie_substituto);
 			time(&now);
@@ -392,7 +781,7 @@ void alterar_pets(Lista * primeiro) {
 		case 3:
 		    printf("\n  Nova raça: ");
 			fflush(stdin);
-			fgets(raca_substituto, 40, stdin);
+			fgets(raca_substituto, 26, stdin);
 			printf("\n");
 			strcpy(atual -> raca, raca_substituto);
 			time(&now);
@@ -416,7 +805,7 @@ void alterar_pets(Lista * primeiro) {
 		case 5:
 		    printf("\n  Nova idade: ");
 			fflush(stdin);
-			fgets(idade_substituto, 2, stdin);
+			fgets(idade_substituto, 3, stdin);
 			printf("\n");
 			strcpy(atual -> idade, idade_substituto);
 			time(&now);
@@ -428,7 +817,7 @@ void alterar_pets(Lista * primeiro) {
 		case 6:
 		    printf("\n  Nova data de nascimento: ");
 			fflush(stdin);
-			fgets(data_nasc_substituto, 11, stdin);
+			fgets(data_nasc_substituto, 12, stdin);
 			printf("\n");
 			strcpy(atual -> data_nasc, data_nasc_substituto);
 			time(&now);
@@ -440,7 +829,7 @@ void alterar_pets(Lista * primeiro) {
 		case 7:
 			printf("\n  Nova descrição: ");
 			fflush(stdin);
-			fgets(descricao_substituto, 140, stdin);
+			fgets(descricao_substituto, 101, stdin);
 			printf("\n");
 			strcpy(atual -> descricao, descricao_substituto);
 			time(&now);
