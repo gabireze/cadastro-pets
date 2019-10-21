@@ -36,6 +36,8 @@ void buscar_nome_pets(Lista *primeiro);
 void buscar_especie_pets(Lista *primeiro);
 void buscar_especie_raca_pets(Lista *primeiro);
 void buscar_especie_raca_sexo_pets(Lista *primeiro);
+void adotar_pets(Lista *primeiro, Lista *segundo);
+void listar_adotados(Lista *segundo);
 //void gravar(Lista *primeiro);
 //void recuperar(Lista *primeiro);
 
@@ -45,6 +47,7 @@ main()
 	system("color fc");
 	//Declararação de variáveis
 	Lista *primeiro = NULL;
+	Lista *segundo = NULL;
 	char opcao;
 
 	//Repetir o programa
@@ -78,6 +81,10 @@ main()
 		printf("   |<I>  Contagem por espécie                        |\n");	//done
 		printf("   |-------------------------------------------------|\n");
 		printf("   |<J>  Listagem de todos os animais cadastrados    |\n");	//done
+		printf("   |-------------------------------------------------|\n");
+		printf("   |<K>  Adotar pet                                  |\n");
+		printf("   |-------------------------------------------------|\n");
+		printf("   |<L>  Listagem de todos os animais adotados       |\n");
 		printf("   |-------------------------------------------------|\n");
 		printf("   |<S>  Sair                                        |\n");	//done
 		printf("   *-------------------------------------------------*\n");
@@ -116,6 +123,36 @@ main()
 				printf("\t\t\t|\n");
 				printf(" *----------------------------------------------------------------------------*\n", 200, 188);
 				listar_pets(primeiro);
+				getch();
+				system("cls");
+				break;
+				
+			case 'K':
+			case 'k':
+				system("color 3b");
+				//Listando os pet.
+				system("cls");
+				printf(" *----------------------------------------------------------------------------*\n", 201, 187);
+				printf(" | ");
+				printf("\t\t\t     ADOTAR PET");
+				printf("\t\t\t|\n");
+				printf(" *----------------------------------------------------------------------------*\n", 200, 188);
+				adotar_pets(primeiro, segundo);
+				getch();
+				system("cls");
+				break;
+				
+			case 'L':
+			case 'l':
+				system("color 3b");
+				//Listando os pet.
+				system("cls");
+				printf(" *----------------------------------------------------------------------------*\n", 201, 187);
+				printf(" | ");
+				printf("\t\t\t     LISTAGEM DE TODOS OS ANIMAIS ADOTADOS");
+				printf("\t\t\t|\n");
+				printf(" *----------------------------------------------------------------------------*\n", 200, 188);
+				listar_adotados(segundo);
 				getch();
 				system("cls");
 				break;
@@ -818,6 +855,53 @@ void listar_pets(Lista *primeiro)
 	free(atual);
 }
 
+void listar_adotados(Lista *segundo)
+{
+	Lista * atual;	//Ponteiro para percorrer a lista sem perder a referencia do primeiro elemento da lista.
+atual = segundo;
+printf("&s",atual->nome);
+	//Imprimindo os pets da lista, e suas repectivas informacoes.
+	for (atual = segundo; atual != NULL; atual = atual->prox)
+	{
+		printf("-----//-----");
+		printf("\n  ID #");
+		printf("%u", atual->codigo);
+		printf("\n  Nome: ");
+		printf("%s", atual->nome);
+		printf("\n  Espécie: ");
+		printf("%s", atual->especie);
+		printf("\n  Raça: ");
+		printf("%s", atual->raca);
+		printf("\n  Sexo: ");
+		printf("%s", atual->sexo);
+		printf("\n  Idade: ");
+		printf("%s", atual->idade);
+		printf("\n  Data de Nascimento: ");
+		printf("%s", atual->data_nasc);
+		printf("\n  Descrição: ");
+		printf("%s", atual->descricao);
+		printf("\n  Criado em ");
+		printf("%s\n", atual->criado_em);
+
+		if (strcmp(atual->atualizado_em, "") != 0)
+		{
+			printf("\n  Atualizado em ");
+			printf("%s\n", atual->atualizado_em);
+		}
+
+		printf("-----//-----");
+		printf("\n\n");
+	}
+
+	if (segundo == NULL)
+	{
+		printf("  Nenhum pet cadastrado.");
+		printf("\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	}
+
+	free(atual);
+}
+
 Lista* excluir_pets(Lista *primeiro)
 {
 	Lista *anterior = NULL;	//Ponteiro para saber o elemento anterior ao elemento atual da lista.
@@ -863,6 +947,33 @@ Lista* excluir_pets(Lista *primeiro)
 	return primeiro;
 	free(atual);
 	free(anterior);
+}
+
+void adotar_pets(Lista *primeiro, Lista *segundo){
+	Lista *atual = primeiro;
+	unsigned long int codigo;
+	//Requisitando e lendo o codigo do pet a ser alterado.
+	printf("  Código do pet a ser adotado: ");
+	fflush(stdin);
+	
+		//Procurando o pet na lista.
+	while (atual != NULL && atual->codigo != codigo)
+	{
+		atual = atual->prox;
+	}
+	//Adotando os dados do pet.
+	if (atual != NULL)
+	{
+		segundo = atual;
+		printf("\n\n Pet adotado com sucesso.");
+	}
+	else
+	{
+		printf("\n  Pet não encontrado.", 198);
+	}
+
+	printf("\n\n\n  PRESSIONE QUALQUER TECLA PARA VOLTAR AO MENU PRINCIPAL.");
+	
 }
 
 //Funcao para alterar pet
