@@ -36,6 +36,8 @@ void buscar_nome_pets(Lista *primeiro);
 void buscar_especie_pets(Lista *primeiro);
 void buscar_especie_raca_pets(Lista *primeiro);
 void buscar_especie_raca_sexo_pets(Lista *primeiro);
+//void gravar(Lista *primeiro);
+//void recuperar(Lista *primeiro);
 
 main()
 {
@@ -244,6 +246,21 @@ main()
 				//Sair do programa.
 				opcao = 's';
 				break;
+				
+			/*case 'Z':
+			case 'z':
+				system("color 08");
+				//Sair do programa.
+				gravar(primeiro);
+				opcao = 's';
+				break;*/
+				
+			/*case 'Y':
+			case 'y':
+				system("color 08");
+				//Sair do programa.
+				recuperar(primeiro);
+				break;*/
 
 			default:
 				//Previne um usuario digite uma opcao inexistente no menu.
@@ -254,6 +271,50 @@ main()
 
 	free(primeiro);
 }
+
+/*    void gravar(Lista *primeiro) {
+    	Lista *atual = primeiro;
+        FILE *arq;
+        // Esses dados vão ser gravados !
+        int ret;
+        // arquivo alvo
+        char nomearq[] = "vet.dat";
+        // arquivo tem que ter permissão w para escrita e b para abrir como binario
+        arq = fopen(nomearq, "wb");
+        if (arq != NULL) {
+            // aqui é feita a escrita !!
+            ret = fwrite(atual, sizeof(atual), sizeof(atual), arq);
+            if (ret == sizeof(atual))
+                printf("Gravacao com sucesso\n");
+            else
+                printf("Foram gravados apenas %d elementos\n", ret);
+            fclose(arq);
+        }
+        else
+            puts("Erro: criacao do arquivo");
+    }*/
+    
+/*   void recuperar(Lista *primeiro) {
+   	Lista *atual = primeiro;
+        FILE *arq;
+        int i, ret;
+        char nomearq[] = "vet.dat";
+
+        arq = fopen(nomearq, "rb");
+        if (arq != NULL) {
+            // estou recuperando AQUI
+            ret = fread(atual, sizeof(atual), 1, arq);
+            printf("%s",ret);
+            if (ret == sizeof(atual)) {
+                primeiro = ret;
+            }
+            else
+                printf("Foram lidos apenas %d elementos\n", ret);
+            fclose(arq);
+        }
+        else
+            puts("Erro: abertura do arquivo");
+    }*/
 
 Lista* inserir_pets(Lista *primeiro)
 {
